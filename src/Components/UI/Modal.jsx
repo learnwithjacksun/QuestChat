@@ -30,7 +30,7 @@ const Modal = ({ title, toggleModal, children }) => {
   };
   return (
     <>
-      <div className="fixed inset-0">
+      <div className="fixed inset-0 z-10">
               <motion.div
                   initial={bgVars.initial}
                   animate={bgVars.animate}
@@ -43,7 +43,7 @@ const Modal = ({ title, toggleModal, children }) => {
           initial="initial"
           animate="animate"
           exit="exit"
-          className="w-[90%] md:w-[480px] mx-auto bg-light border border-line mt-20 p-4 rounded-2xl shadow-lg"
+          className="w-[90%] md:w-[480px] z-20 mx-auto bg-light border border-line mt-20 p-4 rounded-2xl shadow-lg"
         >
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-semibold font-sora">{title}</h3>

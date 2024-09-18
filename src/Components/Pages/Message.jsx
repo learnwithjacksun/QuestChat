@@ -44,7 +44,6 @@ const Message = () => {
           {messages.map((msg) => (
             <li
               data-aos="fade-up"
-            //   data-aos-delay="200"
               key={msg.$id}
               className={
                 msg.userid === recipientId
