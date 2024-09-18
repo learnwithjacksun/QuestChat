@@ -88,7 +88,7 @@ const Message = () => {
         </ul>
 
         {/* Message input form */}
-        <div className="fixed bottom-0 left-0 bg-light w-full py-1 flex items-center">
+        <div className="absolute bottom-0 left-0 bg-light w-full py-1 flex items-center">
           <div className="w-[90%] md:w-[700px] mx-auto flex items-center gap-2">
             <form className="flex gap-2 flex-1" onSubmit={handleSubmit}>
               <textarea
