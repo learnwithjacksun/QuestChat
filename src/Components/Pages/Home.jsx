@@ -13,7 +13,7 @@ const Home = () => {
             <p className="text-sub text-sm">Connects with less boring friends... 🙁</p>
           </div>
 
-          <div className="flex items-center gap-2 md:gap-4 flex-col md:flex-row">
+          <div className="flex w-[80%] mx-auto items-center gap-2 md:gap-4 flex-col md:flex-row">
             <Link to="/chats" className="btn-primary rounded-md min-h-10 flex-1 w-full">
               <span>Go to Chats</span>
               <Icon>arrow_forward</Icon>

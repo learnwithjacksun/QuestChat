@@ -1,17 +1,16 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Icon from "./Icon";
-import useOpenSearch from "../../Hooks/useOpenSearch";
 import useAuth from "../../Hooks/useAuth";
 import Modal from "./Modal";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
+import { navlinks } from "../../Constants/data";
 
 const Heading = ({ children }) => {
   const [modal, setModal] = useState(false);
   const toggleModal = () => setModal((prev) => !prev);
-  const { openSearch, toggleSearch } = useOpenSearch();
     const { data, logout } = useAuth();
     
     const handleLogout = () => {
@@ -26,7 +25,7 @@ const Heading = ({ children }) => {
     }
   return (
     <>
-      <div className="">
+      <div className="line mb-4">
         <div className="layout h-[70px] flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
@@ -38,12 +37,7 @@ const Heading = ({ children }) => {
             <h3 className="text-[1.2em] font-sora">{children}</h3>
           </div>
           <div className="flex items-center gap-4">
-            <button
-              onClick={toggleSearch}
-              className="cursor-pointer h-10 w-10 flex-center"
-            >
-              <Icon>{openSearch ? "close" : "search"}</Icon>
-            </button>
+          
 
             <div
               onClick={toggleModal}
@@ -62,10 +56,12 @@ const Heading = ({ children }) => {
         {modal && (
           <Modal title="Menu" toggleModal={toggleModal}>
             <div className="flex flex-col gap-4">
-              <Link to="/profile" className="flex items-center gap-2 border-b border-line py-2 hover:bg-lighter hover:px-4 duration-200 hover:rounded-md">
-                <Icon>person</Icon>
-                <span>Profile</span>
+              {navlinks.map((x, y) => (
+                <Link key={y} to={x.path} className="flex items-center gap-2 border-b border-line py-2 hover:bg-lighter hover:px-4 duration-200 hover:rounded-md">
+                  <Icon>{x.icon}</Icon>
+                  <span>{x.name}</span>
               </Link>
+              ))}
 
               <button onClick={handleLogout} className="btn-primary h-9 w-1/2 px-6 rounded-md">
                 <Icon>logout</Icon>

@@ -99,12 +99,17 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
         await account.deleteSession("current");
+        setUser(null)
         navigate("/login")
     } catch (error) {
       console.log("Logout:", error);
       throw new Error(error.message);
     }
   };
+
+ 
+
+
 
   const contextData = {
     data,
@@ -114,6 +119,7 @@ const AuthProvider = ({ children }) => {
     login,
     logout,
     loading,
+    getUserData
   };
 
   return (

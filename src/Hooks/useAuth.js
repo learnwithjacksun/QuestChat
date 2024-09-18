@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { AuthContext } from "../Contexts/AuthProvider"
 
 const useAuth = () => {
-    const { user, data, register, users, login, logout } = useContext(AuthContext)
+    const {getUserData, user, data, register, users, login, logout } = useContext(AuthContext)
 
     return {
         user,
@@ -10,7 +10,8 @@ const useAuth = () => {
         register,
         users,
         login,
-        logout
+        logout,
+        getUserData
     }
 }
 

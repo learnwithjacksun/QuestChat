@@ -1,9 +1,6 @@
-import { useState } from "react";
 import Icon from "./Icon";
-
-const Search = () => {
-  const [search, setSearch] = useState("");
-
+import PropTypes from 'prop-types'
+const Search = ({ search, setSearch }) => {
   return (
     <>
       <div className="relative">
@@ -15,11 +12,16 @@ const Search = () => {
           placeholder="Search user by name..."
           className="border-line border-2 placeholder:text-sub text-sm font-medium focus-within:border-sub pl-10 h-10 w-full rounded-lg bg-lighter"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)} // Update search value
         />
       </div>
     </>
   );
 };
+
+Search.propTypes = {
+  search: PropTypes.string.isRequired,
+  setSearch: PropTypes.func.isRequired
+}
 
 export default Search;

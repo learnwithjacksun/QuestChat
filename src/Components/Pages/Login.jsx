@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../UI/AuthLayout";
 import Input from "../UI/Input";
 import { useEffect, useState } from "react";
@@ -38,12 +38,13 @@ const Login = () => {
     }
   };
 
-
+const navigate = useNavigate()
   useEffect(() => {
     if (user) {
       setModal((prev) => !prev);
+      navigate("/chats")
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <>

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Icon from './Icon'
-import Footer from './Footer'
 const AuthLayout = ({children, title, subtitle}) => {
   return (
     <>
@@ -19,7 +18,6 @@ const AuthLayout = ({children, title, subtitle}) => {
           </div>
         </div>
 
-        <Footer/>
       </div>
     </>
   )

@@ -30,3 +30,22 @@ export const users = [
         bio: "This is me, Bad ass boy!🚀"
     },
 ]
+
+export const navlinks = [
+    {
+        icon: "home",
+        name: "Home",
+        path: "/"
+    },
+    {
+        icon: "chat",
+        name: "Chats",
+        path: "/chats"
+    },
+    {
+        icon: "manage_accounts",
+        name: "Profile",
+        path: "/profile"
+    },
+   
+]
