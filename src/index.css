@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Sora:wght@100..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root{
+  --primary:219,26,90;
+  --secondary: 25,25,28;
+  --light:33,33,36;
+  --lighter: 48,48,50;
+  --main:228,228,231;
+  --sub:165,165,168;
+  --line: 56,56,58;
+  --invert: #fefefe;
+}
+
+*{
+  @apply outline-none font-sans text-main cursor-default
+}
+
+body{
+  @apply bg-secondary duration-500
+}
+
+.flex-center{
+  @apply flex justify-center items-center
+}
+
+.main {
+  @apply max-w-[90%] 2xl:max-w-[1280px] mx-auto;
+}
+
+.layout {
+  @apply max-w-full md:max-w-[700px] mx-auto;
+}
+
+.btn{
+  @apply font-semibold text-[.9em] flex-center gap-2 active:brightness-90 hover:brightness-125 duration-200
+}
+
+.btn-primary{
+  @apply bg-primary text-invert btn
+}
+
+i, span, a{
+  @apply text-inherit
+}
+
+.line{
+  @apply relative before:absolute before:bottom-0 before:h-[1px] before:w-1/2 before:bg-line before:left-1/2 before:-translate-x-1/2
+}
+
+.role{
+  @apply font-medium text-xs bg-green-500/10 px-2 rounded-full border border-green-500 text-green-500
+}
+
+.custom-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.gradient-text{
+  @apply bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent
+}
+
+.text-display {
+  white-space: pre-wrap;
+}
+
+.user-message-box{
+  @apply flex gap-1 justify-end items-center
+}
+.user-message-body{
+  @apply border border-line p-2 text-sm font-medium rounded-tl-xl rounded-bl-xl rounded-md
+}
+.user-message-details{
+  @apply text-xs text-sub text-end
+}
+
+.other-message-box{
+  @apply flex gap-1 justify-start items-center
+}
+.other-message-body{
+  @apply bg-lighter p-2 text-sm font-medium rounded-tr-xl rounded-br-xl rounded-md
+}
+.other-message-details{
+  @apply text-xs text-sub text-start font-medium
+}
+
+
+
+@media (prefers-color-scheme: light) {
+ 
+}

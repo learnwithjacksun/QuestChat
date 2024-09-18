@@ -1,0 +1,81 @@
+//   useEffect(() => {
+//     const fetchMessages = async () => {
+//       try {
+//         const res = await databases.listDocuments("chatdb", "messages", [
+//           Query.or(
+//             Query.and(Query.equal("userid", userId), Query.equal("messageid", recipientId)),
+//             Query.and(Query.equal("userid", recipientId), Query.equal("messageid", userId))
+//           ),
+//         ]);
+//         setMessages(res.documents);
+//       } catch (error) {
+//         console.log("Error fetching messages:", error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchMessages();
+//   }, [userId, recipientId]);
+
+//   // Send a message
+//   const sendMessage = async (message) => {
+//     try {
+//       const newMessage = await databases.createDocument("chatdb", "messages", ID.unique(), {
+//           userid: userId,
+//           name: data?.name,
+//         messageid: recipientId,
+//         message:message,
+//       });
+//       setMessages((prev) => [...prev, newMessage]);
+//     } catch (error) {
+//       console.log("Error sending message:", error);
+//     }
+//   };
+
+
+
+
+
+
+
+
+ {/* {messages.length === 0 && <p>No messages yet!</p>}
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <ul className="my-8 flex flex-col gap-4 md:gap-10">
+            {messages.map((msg, index) => (
+              <li
+                key={index}
+                className={
+                  msg.userid === user.$id
+                    ? "user-message-box"
+                    : "other-message-box"
+                }
+              >
+                <div className="max-w-[70%]">
+                  <div
+                    className={
+                      msg.userid === user.$id
+                        ? "user-message-body text-display"
+                        : "other-message-body text-display"
+                    }
+                  >
+                    <div>{msg.message}</div>
+                  </div>
+                  <div
+                    className={
+                      msg.userid === user.$id
+                        ? "user-message-details"
+                        : "other-message-details"
+                    }
+                  >
+                    {msg.userid === user.$id ? "You" : msg.name} -{" "}
+                    {new Date(msg.$createdAt).toLocaleString()}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+              )} */}
