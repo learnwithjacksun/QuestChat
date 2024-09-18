@@ -38,6 +38,7 @@ const Login = () => {
     }
   };
 
+
   useEffect(() => {
     if (user) {
       setModal((prev) => !prev);

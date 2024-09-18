@@ -75,10 +75,8 @@ const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       try {
         const res = await account.get();
-        if (res) {
           setUser(res);
-          getUserData(res.$id);
-        }
+          await getUserData(res.$id);
       } catch (error) {
         console.log("Check Auth:", error);
       }

@@ -7,7 +7,7 @@ const AuthLayout = ({children, title, subtitle}) => {
     <>
       <div className='main flex flex-col items-center w-full min-h-screen justify-between pt-4 pb-10 gap-4'>
         <div className='layout w-full'>
-          <Link to={-1} className='h-10 w-10 btn bg-light border border-line rounded-md'>
+          <Link to="/" className='h-10 w-10 btn bg-light border border-line rounded-md'>
           <Icon>arrow_back</Icon>
           </Link>
           <div className='flex flex-col gap-6'>
