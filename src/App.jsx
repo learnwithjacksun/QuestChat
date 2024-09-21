@@ -19,6 +19,20 @@ const App = () => {
     Aos.init();
   }, []);
 
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-vars
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      deferredPrompt = e
+      console.log('beforeinstallprompt event triggered');
+    });
+
+    window.addEventListener('appinstalled', () => {
+      console.log('PWA installed');
+    });
+  }, []);
+
   return (
     <>
       <Toaster />

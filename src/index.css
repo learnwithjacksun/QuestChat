@@ -16,6 +16,10 @@
   --invert: #fefefe;
 }
 
+.ff{
+  color: #db1a5a;
+}
+
 *{
   @apply outline-none font-sans text-main cursor-default
 }
