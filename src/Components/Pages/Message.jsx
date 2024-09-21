@@ -95,7 +95,7 @@ const Message = () => {
                         ? "other-message-details"
                         : "user-message-details"
                     }
-                  >{`${msg.name} - ${new Date(
+                  >{`${msg.userid === recipientId ? msg.name: "You"} - ${new Date(
                     msg.$createdAt
                   ).toLocaleString()}`}</div>
                 </div>
