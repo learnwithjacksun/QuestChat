@@ -25,22 +25,11 @@ const useMessages = (recipientId) => {
                     ]),
                 ]),
             ]);
+
+        
             
             setMessages(res.documents);
             console.log("Messages fetched:", res);
-
-            // Check for new messages from the recipient and send notifications
-            const newMessages = res.documents.filter(msg => 
-                msg.userid === recipientId && 
-                msg.messageId === user?.$id && 
-                !msg.notificationSent
-            );
-
-            newMessages.forEach(msg => {
-                sendNotificationToRecipient(msg.name, msg.message);
-                markNotificationAsSent(msg.$id);
-            });
-
         } catch (error) {
             console.log("Fetch Messages:", error);
         } finally {
@@ -54,59 +43,60 @@ const useMessages = (recipientId) => {
                 userid: user?.$id,
                 message: message,
                 name: data?.name,
-                messageId: recipientId,
-                notificationSent: false,
+                messageId: recipientId, 
+                notificationSent: false
             });
             console.log("Message sent:", res);
             fetchMessages();
+    
+            // Trigger notification for the recipient
+            if (recipientId !== user?.$id) {
+                sendNotificationToRecipient( messages?.name, message);
+            }
         } catch (error) {
             console.log("Send Message:", error);
             throw new Error(error.message);
         }
-    }, [fetchMessages, recipientId, user?.$id, data?.name]);
+    },[messages?.name, fetchMessages, recipientId, user?.$id, data?.name]);
+    
+
+    
 
     useEffect(() => {
         fetchMessages();
-        const interval = setInterval(fetchMessages, 5000); 
-        return () => clearInterval(interval);
-    }, [fetchMessages]);
+    }, [fetchMessages, sendMessage]);
 
     const deleteMessage = async (id) => {
         try {
-            await databases.deleteDocument("chatdb", "messages", id);
-            fetchMessages();
+            await databases.deleteDocument(
+                "chatdb",
+                "messages",
+                id
+            )
+            fetchMessages()
         } catch (error) {
             console.log("Delete Message:", error);
             throw new Error(error.message);
         }
-    };
+    }
 
-    const sendNotificationToRecipient = (senderName, message) => {
+    const sendNotificationToRecipient = ( senderName, message) => {
         Notification.requestPermission().then(permission => {
             if (permission === "granted") {
                 const notification = new Notification(`New message - QuestChat`, {
-                    body: `${senderName}: ${message}`,
+                    body:` ${senderName}: ${message}`,
                     icon: "/logo.png",
                 });
-
+    
                 notification.addEventListener("click", () => {
-                    window.location.href = "https://questchat.netlify.app";
+                    window.location.href = "https://questchat.netlify.app"; 
                 });
             }
         });
     };
+    
 
-    const markNotificationAsSent = async (messageId) => {
-        try {
-            await databases.updateDocument("chatdb", "messages", messageId, {
-                notificationSent: true
-            });
-        } catch (error) {
-            console.log("Mark Notification as Sent:", error);
-        }
-    };
-
-    return { messages, sendMessage, loading, deleteMessage };
+    return { messages, sendMessage, loading, deleteMessage, sendNotificationToRecipient };
 };
 
 export default useMessages;
