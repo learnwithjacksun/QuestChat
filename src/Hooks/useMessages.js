@@ -20,8 +20,8 @@ const useMessages = (recipientId) => {
             fetchMessages();
     
             // Trigger notification for the recipient
-            if (recipientId !== user?.$id) {
-                sendNotificationToRecipient(recipientId, data?.name, message);
+            if (recipientId === user?.$id) {
+                sendNotificationToRecipient( data?.name, message);
             }
         } catch (error) {
             console.log("Send Message:", error);
@@ -54,11 +54,11 @@ const useMessages = (recipientId) => {
         } finally {
             setLoading(false);
         }
-    }, [recipientId, user?.$id,]);
+    }, [recipientId, user?.$id]);
 
     useEffect(() => {
         fetchMessages();
-    }, [fetchMessages]);
+    }, [fetchMessages, messages]);
 
     const deleteMessage = async (id) => {
         try {
@@ -74,7 +74,7 @@ const useMessages = (recipientId) => {
         }
     }
 
-    const sendNotificationToRecipient = (recipientId, senderName, message) => {
+    const sendNotificationToRecipient = ( senderName, message) => {
         Notification.requestPermission().then(permission => {
             if (permission === "granted") {
                 const notification = new Notification(`New message from ${senderName} - QuestChat`, {
