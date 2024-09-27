@@ -8,28 +8,6 @@ const useMessages = (recipientId) => {
     const [loading, setLoading] = useState(true);
     const { data, user } = useAuth();
 
-    const sendMessage = async (message) => {
-        try {
-            const res = await databases.createDocument("chatdb", "messages", ID.unique(), {
-                userid: user?.$id,
-                message: message,
-                name: data?.name,
-                messageId: recipientId,  
-            });
-            console.log("Message sent:", res);
-            fetchMessages();
-    
-            // Trigger notification for the recipient
-            if (recipientId === user?.$id) {
-                sendNotificationToRecipient( data?.name, message);
-            }
-        } catch (error) {
-            console.log("Send Message:", error);
-            throw new Error(error.message);
-        }
-    };
-    
-
     const fetchMessages = useCallback(async () => {
         if (!recipientId || !user?.$id) return;
 
@@ -47,8 +25,22 @@ const useMessages = (recipientId) => {
                     ]),
                 ]),
             ]);
+            
             setMessages(res.documents);
             console.log("Messages fetched:", res);
+
+            // Check for new messages from the recipient and send notifications
+            const newMessages = res.documents.filter(msg => 
+                msg.userid === recipientId && 
+                msg.messageId === user?.$id && 
+                !msg.notificationSent
+            );
+
+            newMessages.forEach(msg => {
+                sendNotificationToRecipient(msg.name, msg.message);
+                markNotificationAsSent(msg.$id);
+            });
+
         } catch (error) {
             console.log("Fetch Messages:", error);
         } finally {
@@ -56,41 +48,65 @@ const useMessages = (recipientId) => {
         }
     }, [recipientId, user?.$id]);
 
+    const sendMessage = useCallback(async (message) => {
+        try {
+            const res = await databases.createDocument("chatdb", "messages", ID.unique(), {
+                userid: user?.$id,
+                message: message,
+                name: data?.name,
+                messageId: recipientId,
+                notificationSent: false,
+            });
+            console.log("Message sent:", res);
+            fetchMessages();
+        } catch (error) {
+            console.log("Send Message:", error);
+            throw new Error(error.message);
+        }
+    }, [fetchMessages, recipientId, user?.$id, data?.name]);
+
     useEffect(() => {
         fetchMessages();
-    }, [fetchMessages, messages]);
+        const interval = setInterval(fetchMessages, 5000); 
+        return () => clearInterval(interval);
+    }, [fetchMessages]);
 
     const deleteMessage = async (id) => {
         try {
-            await databases.deleteDocument(
-                "chatdb",
-                "messages",
-                id
-            )
-            fetchMessages()
+            await databases.deleteDocument("chatdb", "messages", id);
+            fetchMessages();
         } catch (error) {
             console.log("Delete Message:", error);
             throw new Error(error.message);
         }
-    }
+    };
 
-    const sendNotificationToRecipient = ( senderName, message) => {
+    const sendNotificationToRecipient = (senderName, message) => {
         Notification.requestPermission().then(permission => {
             if (permission === "granted") {
-                const notification = new Notification(`New message from ${senderName} - QuestChat`, {
-                    body: message,
+                const notification = new Notification(`New message - QuestChat`, {
+                    body: `${senderName}: ${message}`,
                     icon: "/logo.png",
                 });
-    
+
                 notification.addEventListener("click", () => {
-                    window.location.href = "https://questchat.netlify.app"; 
+                    window.location.href = "https://questchat.netlify.app";
                 });
             }
         });
     };
-    
 
-    return { messages, sendMessage, loading, deleteMessage, sendNotificationToRecipient };
+    const markNotificationAsSent = async (messageId) => {
+        try {
+            await databases.updateDocument("chatdb", "messages", messageId, {
+                notificationSent: true
+            });
+        } catch (error) {
+            console.log("Mark Notification as Sent:", error);
+        }
+    };
+
+    return { messages, sendMessage, loading, deleteMessage };
 };
 
 export default useMessages;
