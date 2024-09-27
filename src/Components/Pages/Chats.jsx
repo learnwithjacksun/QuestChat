@@ -21,14 +21,6 @@ const Chats = () => {
   };
 
   useEffect(() => {
-    Notification.requestPermission()
-  },[])
-
-  
-
-  
-
-  useEffect(() => {
     const searchResults = users.filter((user) =>
       user.name.toLowerCase().includes(search.toLowerCase())
     );
@@ -44,7 +36,6 @@ const Chats = () => {
           All users:{" "}
           <span className="text-primary font-bold">{users.length}</span>
         </h3>
-
 
         <ul className="my-4 flex flex-col gap-2">
           {loading && <p>fetching chats...</p>}
