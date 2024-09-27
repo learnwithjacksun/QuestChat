@@ -13,6 +13,8 @@ const Message = () => {
   const { messages, sendMessage, deleteMessage } = useMessages(recipientId);
   const [message, setMessage] = useState("");
   const { user } = useAuth();
+
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!message) {
@@ -22,6 +24,8 @@ const Message = () => {
     sendMessage(message);
     setMessage("");
   };
+
+
 
   const handleDelete = (id) => {
     toast.promise(deleteMessage(id), {

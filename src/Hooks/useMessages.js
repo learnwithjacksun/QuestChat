@@ -14,15 +14,21 @@ const useMessages = (recipientId) => {
                 userid: user?.$id,
                 message: message,
                 name: data?.name,
-                messageId: recipientId,
+                messageId: recipientId,  
             });
             console.log("Message sent:", res);
-            fetchMessages()
+            fetchMessages();
+    
+            // Trigger notification for the recipient
+            if (recipientId !== user?.$id) {
+                sendNotificationToRecipient(recipientId, data?.name, message);
+            }
         } catch (error) {
             console.log("Send Message:", error);
             throw new Error(error.message);
         }
     };
+    
 
     const fetchMessages = useCallback(async () => {
         if (!recipientId || !user?.$id) return;
@@ -68,7 +74,23 @@ const useMessages = (recipientId) => {
         }
     }
 
-    return { messages, sendMessage, loading, deleteMessage };
+    const sendNotificationToRecipient = (recipientId, senderName, message) => {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                const notification = new Notification(`New message from ${senderName} - QuestChat`, {
+                    body: message,
+                    icon: "/logo.png",
+                });
+    
+                notification.addEventListener("click", () => {
+                    window.location.href = "https://questchat.netlify.app"; 
+                });
+            }
+        });
+    };
+    
+
+    return { messages, sendMessage, loading, deleteMessage, sendNotificationToRecipient };
 };
 
 export default useMessages;

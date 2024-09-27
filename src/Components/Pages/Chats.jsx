@@ -5,7 +5,7 @@ import useAuth from "../../Hooks/useAuth";
 import { useState, useEffect } from "react";
 
 const Chats = () => {
-  const { users, loading} = useAuth();
+  const { users, loading } = useAuth();
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -19,6 +19,12 @@ const Chats = () => {
       },
     });
   };
+
+  useEffect(() => {
+    Notification.requestPermission()
+  },[])
+
+  
 
   
 
@@ -39,10 +45,11 @@ const Chats = () => {
           <span className="text-primary font-bold">{users.length}</span>
         </h3>
 
+
         <ul className="my-4 flex flex-col gap-2">
           {loading && <p>fetching chats...</p>}
           {filteredUsers.map((user) => {
-            const { $id, name, userid, bio } = user;
+            const { $id, name, userid } = user;
             return (
               <li data-aos="fade-right" data-aos-delay="200" key={$id}>
                 <div
@@ -58,9 +65,9 @@ const Chats = () => {
                   </div>
                   <div>
                     <h3 className="">{name}</h3>
-                    <p className="line-clamp-1 text-sub text-sm">
+                    {/* <p className="line-clamp-1 text-sub text-sm">
                         {bio}
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </li>
